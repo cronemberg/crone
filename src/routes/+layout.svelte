@@ -30,7 +30,7 @@
 	<slot />
 </main>
 <div class="background-gradient absolute inset-0 -z-50 max-h-screen"></div>
-<div class="pointer-events-none absolute inset-0 -z-40 h-full bg-[url('noisetexture.jpg')] opacity-10 mix-blend-soft-light"></div>
+<div class="pointer-events-none absolute inset-0 -z-40 h-full bg-[url('/noisetexture.jpg')] opacity-10 mix-blend-soft-light"></div>
 <!--<div class="absolute inset-4 bg-indigo-950 -z-30 opacity-50"></div><!-- Use a darker shade -->
 
 <Footer settings={data.settings}/>
