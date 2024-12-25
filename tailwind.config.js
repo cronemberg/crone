@@ -6,5 +6,5 @@ export default defineConfig({
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [typography],
 });

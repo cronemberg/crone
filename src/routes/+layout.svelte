@@ -1,6 +1,6 @@
 <script>
 	import "../app.css";
-	import '@fontsource-variable/josefin-sans';
+	//import '@fontsource-variable/josefin-sans';
 	import { PrismicPreview } from '@prismicio/svelte/kit';
 	import { page } from '$app/stores';
 	import { repositoryName } from '$lib/prismicio';
