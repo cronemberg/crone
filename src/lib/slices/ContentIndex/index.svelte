@@ -6,7 +6,7 @@
 	import ContentList from './ContentList.svelte';
 
 	export let slice: Content.ContentIndexSlice;
-
+	
 	export let items: Content.LportfolioDocument[] | Content.ProjectsDocument[];
 </script>
 
@@ -15,13 +15,14 @@
 		{slice.primary.heading}
 	</Heading>
 	{#if isFilled.richText(slice.primary.description)}
-	<div class="prose prose-xl prose-invert mb-10">
-		<PrismicRichText field={slice.primary.description} />
-	</div>
-		
+		<div class="prose prose-xl prose-invert mb-10">
+			<PrismicRichText field={slice.primary.description} />
+		</div>
 	{/if}
 
-	<ContentList 
-		{items} fallbackItemImage={slice.primary.fallback_item_image} viewMoreText={slice.primary.view_more_text}
+	<ContentList
+		{items}
+		fallbackItemImage={slice.primary.fallback_item_image}
+		viewMoreText={slice.primary.view_more_text}
 	/>
 </Bounded>

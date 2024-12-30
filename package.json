@@ -18,9 +18,9 @@
 		"@iconify-json/ic": "^1.2.1",
 		"@iconify-json/line-md": "^1.2.2",
 		"@iconify-json/material-symbols": "^1.2.4",
-		"@slicemachine/adapter-sveltekit": "^0.3.49",
+		"@slicemachine/adapter-sveltekit": "^0.3.61",
 		"@sveltejs/adapter-auto": "^3.2.2",
-		"@sveltejs/kit": "^2.6.1",
+		"@sveltejs/kit": "^2.15.0",
 		"@sveltejs/vite-plugin-svelte": "^3.1.1",
 		"@tailwindcss/typography": "^0.5.15",
 		"@types/eslint": "^8.56.10",
@@ -30,7 +30,7 @@
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-svelte": "^2.39.3",
 		"globals": "^15.4.0",
-		"postcss": "^8.4.47",
+		"postcss": "^8.4.49",
 		"prettier": "^3.3.2",
 		"prettier-plugin-svelte": "^3.2.4",
 		"slice-machine-ui": "^2.7.1",
@@ -42,7 +42,7 @@
 		"typescript-eslint": "^8.0.0-alpha.20",
 		"typescript-svelte-plugin": "^0.3.38",
 		"unplugin-icons": "^0.19.3",
-		"vite": "^5.3.1"
+		"vite": "^5.0.3"
 	},
 	"type": "module",
 	"dependencies": {

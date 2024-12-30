@@ -1,11 +1,11 @@
 <script>
 	import "../app.css";
-	//import '@fontsource-variable/josefin-sans';
+	import '@fontsource-variable/josefin-sans';
 	import { PrismicPreview } from '@prismicio/svelte/kit';
 	import { page } from '$app/stores';
 	import { repositoryName } from '$lib/prismicio';
-	import Footer from "$lib/components/Footer.svelte";
-	import Header from "$lib/components/Header.svelte";
+	import Footer from '$lib/components/Footer.svelte';
+	import Header from '$lib/components/Header.svelte';
 
 	export let data;
 </script>
@@ -24,15 +24,14 @@
 	{/if}
 </svelte:head>
 
-<Header settings={data.settings}/>
-
+<Header settings={data.settings} />
 <main>
 	<slot />
 </main>
-<div class="background-gradient absolute inset-0 -z-50 max-h-screen"></div>
-<div class="pointer-events-none absolute inset-0 -z-40 h-full bg-[url('/noisetexture.jpg')] opacity-10 mix-blend-soft-light"></div>
-<!--<div class="absolute inset-4 bg-indigo-950 -z-30 opacity-50"></div><!-- Use a darker shade -->
+<div class="background-gradient absolute inset-0 -z-50 max-h-screen" />
+<div
+	class="pointer-events-none absolute inset-0 -z-40 h-full bg-[url('/noisetexture.jpg')] opacity-20 mix-blend-soft-light"
+></div>
+<Footer settings={data.settings} />
 
-<Footer settings={data.settings}/>
-
-<PrismicPreview {repositoryName}/>
+<PrismicPreview {repositoryName} />
