@@ -52,7 +52,12 @@
 		"@threlte/core": "^7.3.1",
 		"@threlte/extras": "^8.11.5",
 		"clsx": "^2.1.1",
+		"glob": "^11.0.0",
 		"gsap": "^3.12.5",
-		"three": "^0.168.0"
+		"rimraf": "^6.0.1",
+		"three": "^0.171.0"
+	},
+	"overrides": {
+		"three": "^0.171.0"
 	}
 }
