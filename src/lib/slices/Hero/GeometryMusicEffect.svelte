@@ -22,8 +22,8 @@
     let visible = false;
 
     const glbFiles = [
-        'src/lib/slices/otherimages/GLTF/Effect.glb',
-        'src/lib/slices/otherimages/GLTF/Music.glb',
+        '/static/models/Effect.glb',
+        '/static/models/Music.glb',
     ];
 
     const defaultMaterial = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
@@ -102,7 +102,7 @@
 
     // Load initial GLTF
     const loader = new GLTFLoader();
-    loader.load('src/lib/slices/otherimages/GLTF/Effect.glb', (gltf) => {
+    loader.load('/static/models/Effect.glb', (gltf) => {
         const loadedMesh = gltf.scene.children[0] as THREE.Mesh;
 
         geometry = loadedMesh.geometry;

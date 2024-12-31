@@ -35,13 +35,13 @@ export let settings: Content.SetttingsDocument;
             </ul>
 		</nav>
 		<div class="socials inline-flex justify-center sm:justify-end items-center">
-			{#if isFilled.link(settings.data.github_link)}
-				<PrismicLink field={settings.data.github_link} class="p-2 text-3xl text-slate-300 transform trasition-all duration-150 hover:scale-125 hover:text-yellow-400" aria-label={settings.data.name + ' on Youtube'}>
+			{#if isFilled.link(settings.data.youtube_link)}
+				<PrismicLink field={settings.data.youtube_link} class="p-2 text-3xl text-slate-300 transform trasition-all duration-150 hover:scale-125 hover:text-yellow-400" aria-label={settings.data.name + ' on Youtube'}>
 					<IconYoutube/>
 				</PrismicLink>
 			{/if}
-			{#if isFilled.link(settings.data.github_link)}
-				<PrismicLink field={settings.data.github_link} class="p-2 text-2xl text-slate-300 transform trasition-all duration-150 hover:scale-125 hover:text-yellow-400" aria-label={settings.data.name + ' on Linkedin'}>
+			{#if isFilled.link(settings.data.linkedin_link)}
+				<PrismicLink field={settings.data.linkedin_link} class="p-2 text-2xl text-slate-300 transform trasition-all duration-150 hover:scale-125 hover:text-yellow-400" aria-label={settings.data.name + ' on Linkedin'}>
 					<IconLinkedin/>
 				</PrismicLink>
 			{/if}

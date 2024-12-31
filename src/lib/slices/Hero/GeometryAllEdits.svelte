@@ -22,12 +22,12 @@
     let visible = false;
 
     const glbFiles = [
-        'src/lib/slices/otherimages/GLTF/Edit1.glb',
-        'src/lib/slices/otherimages/GLTF/Edit2.glb',
-        'src/lib/slices/otherimages/GLTF/Edit3.glb',
-        'src/lib/slices/otherimages/GLTF/Edit4.glb',
-        'src/lib/slices/otherimages/GLTF/Edit5.glb',
-        'src/lib/slices/otherimages/GLTF/Razor.glb',
+        '/static/models/Edit1.glb',
+        '/static/models/Edit2.glb',
+        '/static/models/Edit3.glb',
+        '/static/models/Edit4.glb',
+        '/static/models/Edit5.glb',
+        '/static/models/Razor.glb',
     ];
 
     const defaultMaterial = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
@@ -106,7 +106,7 @@
 
     // Load initial GLTF
     const loader = new GLTFLoader();
-    loader.load('src/lib/slices/otherimages/GLTF/Razor.glb', (gltf) => {
+    loader.load('/static/models/Razor.glb', (gltf) => {
         const loadedMesh = gltf.scene.children[0] as THREE.Mesh;
 
         geometry = loadedMesh.geometry;
