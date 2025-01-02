@@ -109,8 +109,8 @@
         customMaterial = loadedMesh.material;
     });
 
-    const placeholderGeometry = new THREE.BoxGeometry(2, 2, 2);
-    const placeholderMaterial = new THREE.MeshBasicMaterial({ color: 0xcccccc });
+    // const placeholderGeometry = new THREE.BoxGeometry(2, 2, 2);
+    // const placeholderMaterial = new THREE.MeshBasicMaterial({ color: 0xcccccc });
 
 </script>
 
@@ -135,8 +135,7 @@
             />
             {:else} 
              <Threlte.Mesh 
-                 geometry={placeholderGeometry} 
-                 material={placeholderMaterial} />
+                  />
         {/if}    
         
     </Float>
