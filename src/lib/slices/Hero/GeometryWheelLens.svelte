@@ -22,8 +22,8 @@
     let visible = false;
 
     const glbFiles = [
-        '/static/models/Wheel.glb',
-        '/static/models/Lens.glb',
+        '/models/Wheel.glb',
+        '/models/Lens.glb',
     ];
 
     const defaultMaterial = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
@@ -102,7 +102,7 @@
 
     // Load initial GLTF
     const loader = new GLTFLoader();
-    loader.load('/static/models/Wheel.glb', (gltf) => {
+    loader.load('/models/Wheel.glb', (gltf) => {
         const loadedMesh = gltf.scene.children[0] as THREE.Mesh;
 
         geometry = loadedMesh.geometry;

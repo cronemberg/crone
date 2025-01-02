@@ -22,10 +22,10 @@
     let visible = false;
 
     const glbFiles = [
-        '/static/models/LittleCrown.glb',
-        '/static/models/Hair.glb',
-        '/static/models/Sombrero.glb',
-        '/static/models/Cartola.glb',
+        '/models/LittleCrown.glb',
+        '/models/Hair.glb',
+        '/models/Sombrero.glb',
+        '/models/Cartola.glb',
     ];
 
     const defaultMaterial = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
@@ -104,7 +104,7 @@
 
     // Load initial GLTF
     const loader = new GLTFLoader();
-    loader.load('/static/models/Hair.glb', (gltf) => {
+    loader.load('/models/Hair.glb', (gltf) => {
         const loadedMesh = gltf.scene.children[0] as THREE.Mesh;
 
         geometry = loadedMesh.geometry;

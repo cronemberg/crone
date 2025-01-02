@@ -22,12 +22,12 @@
     let visible = false;
 
     const glbFiles = [
-        '/static/models/Face1.glb',
-        '/static/models/Face2.glb',
-        '/static/models/Face3.glb',
-        '/static/models/Face4.glb',
-        '/static/models/Face5.glb',
-        '/static/models/Face6.glb',
+        '/models/Face1.glb',
+        '/models/Face2.glb',
+        '/models/Face3.glb',
+        '/models/Face4.glb',
+        '/models/Face5.glb',
+        '/models/Face6.glb',
     ];
 
 
@@ -143,7 +143,7 @@
 
     // Load initial GLTF
     const loader = new GLTFLoader();
-    loader.load('/static/models/Face1.glb', (gltf) => {
+    loader.load('/models/Face1.glb', (gltf) => {
         const loadedMesh = gltf.scene.children[0] as THREE.Mesh;
 
         geometry = loadedMesh.geometry;

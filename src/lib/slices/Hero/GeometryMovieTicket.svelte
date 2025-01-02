@@ -22,8 +22,8 @@
     let visible = false;
 
     const glbFiles = [
-        '/static/models/TicketB.glb',
-        '/static/models/Movie.glb',
+        '/models/TicketB.glb',
+        '/models/Movie.glb',
     ];
 
     const defaultMaterial = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
@@ -102,7 +102,7 @@
 
     // Load initial GLTF
     const loader = new GLTFLoader();
-    loader.load('/static/models/Movie.glb', (gltf) => {
+    loader.load('/models/Movie.glb', (gltf) => {
         const loadedMesh = gltf.scene.children[0] as THREE.Mesh;
 
         geometry = loadedMesh.geometry;
