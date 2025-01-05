@@ -3,8 +3,8 @@
 	import Heading from '$lib/components/Heading.svelte';
 	import { isFilled, type Content } from '@prismicio/client';
 	import { PrismicRichText } from '@prismicio/svelte';
-	import ContentList from './ContentList.svelte';
 	import Hero2Index from '../Hero2/index.svelte';
+	import ContentList from './ContentList.svelte';
 
 	export let slice: Content.Hero2Slice;  // New prop for the Hero2 slice
 	

@@ -15,8 +15,8 @@
 
 	gsap.registerPlugin(ScrollTrigger);
 
-export let items: Content.LportfolioDocument[] | Content.ProjectsDocument[];
-export let fallbackItemImage: ImageField;
+	export let items: Content.LportfolioDocument[] | Content.ProjectsDocument[];
+	export let fallbackItemImage: ImageField;
 	export let viewMoreText: KeyTextField = 'Read More';
 
 	let lastMousePos = { x: 0, y: 0 };
@@ -66,21 +66,35 @@ export let fallbackItemImage: ImageField;
 	};
 
 	const handleMouseMove = (e: MouseEvent) => {
-		const mousePos = { x: e.clientX, y: e.clientY + window.scrollY };
+		const mousePos = { 
+			x: e.clientX, 
+			y: e.clientY + window.scrollY 
+		};
 
+		// Calculate layout offset of the hover-reveal parent element using getBoundingClientRect
+		const hoverRevealParent = document.querySelector('.content-list-item');
+		const boundingRect = hoverRevealParent?.getBoundingClientRect();
+
+		// If bounding rect is available, calculate the offset for X and Y
+		const layoutOffsetX = boundingRect ? boundingRect.left : 0;
+		const layoutOffsetY = boundingRect ? boundingRect.top : 0;
+
+		// Calculate speed for rotation effect
 		const speed = Math.sqrt(Math.pow(mousePos.x - lastMousePos.x, 2));
 
+		// Maximum values to clamp mouse position
 		const maxY = window.scrollY + window.innerHeight - 350;
 		const maxX = window.innerWidth - 250;
 
 		gsap.to('.hover-reveal', {
-			x: gsap.utils.clamp(0, maxX, mousePos.x - 110),
-			y: gsap.utils.clamp(0, maxY, mousePos.y - 160),
-			rotation: speed * (mousePos.x > lastMousePos.x ? 1 : -1),
+			x: gsap.utils.clamp(0, maxX, mousePos.x - layoutOffsetX + 150), // Adjusting X using layout offset
+			y: gsap.utils.clamp(0, maxY, mousePos.y - layoutOffsetY - 63), // Adjusting Y using layout offset
+			rotation: speed * 0.5 * (mousePos.x > lastMousePos.x ? 1 : -1),
 			ease: 'back.out(2)',
-			duration: 1.3
+			duration: 1
 		});
 
+		// Fade-in and visibility handling
 		gsap.to('.hover-reveal', {
 			opacity: currentIndex === undefined ? 0 : 1,
 			visibility: 'visible',
@@ -88,6 +102,7 @@ export let fallbackItemImage: ImageField;
 			duration: 0.6
 		});
 
+		// Update last mouse position
 		lastMousePos = mousePos;
 	};
 
@@ -134,6 +149,6 @@ export let fallbackItemImage: ImageField;
 
 <!-- Hover element -->
 <div
-	class="hover-reveal pointer-events-none absolute left-0 top-0 -z-10 h-[180px] w-[320px] rounded-lg bg-cover bg-center opacity-0 transition-[background] duration-300"
+	class="hover-reveal pointer-events-none absolute left-0 top-0 -z-10 h-[126px] w-[224px] rounded-lg bg-cover bg-center opacity-0 transition-[background] duration-300"
 	style={currentIndex === undefined ? '' : `background-image: url(${contentImages[currentIndex]})`}
-></div>
+/>
