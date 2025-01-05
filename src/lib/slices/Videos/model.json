@@ -1,0 +1,50 @@
+{
+  "id": "videos",
+  "type": "SharedSlice",
+  "name": "Videos",
+  "description": "Videos",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": "",
+      "primary": {
+        "youtube_video_id": {
+          "type": "Text",
+          "config": {
+            "label": "Youtube Video Id",
+            "placeholder": "asdhuashdushad"
+          }
+        },
+        "title": {
+          "type": "Text",
+          "config": {
+            "label": "Title",
+            "placeholder": ""
+          }
+        },
+        "thumbnail_override": {
+          "type": "Image",
+          "config": {
+            "label": "Thumbnail Override",
+            "constraint": {},
+            "thumbnails": []
+          }
+        },
+        "caption": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Caption",
+            "placeholder": "",
+            "allowTargetBlank": true,
+            "single": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,rtl,embed,list-item,o-list-item"
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}

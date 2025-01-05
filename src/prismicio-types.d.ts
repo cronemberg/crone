@@ -4,7 +4,7 @@ import type * as prismic from '@prismicio/client';
 
 type Simplify<T> = { [KeyType in keyof T]: T[KeyType] };
 
-type LportfolioDocumentDataSlicesSlice = RichTextSlice | ImageBlockSlice;
+type LportfolioDocumentDataSlicesSlice = VideosSlice | RichTextSlice | ImageBlockSlice;
 
 /**
  * Content for LPortfolio documents
@@ -102,6 +102,8 @@ export type LportfolioDocument<Lang extends string = string> = prismic.PrismicDo
 >;
 
 type PageDocumentDataSlicesSlice =
+	| Hero2Slice
+	| VideosSlice
 	| ContentIndexSlice
 	| ExperienceSlice
 	| TechListSlice
@@ -788,6 +790,33 @@ type HeroSliceVariation = HeroSliceDefault;
 export type HeroSlice = prismic.SharedSlice<'hero', HeroSliceVariation>;
 
 /**
+ * Default variation for Hero2 Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type Hero2SliceDefault = prismic.SharedSliceVariation<
+	'default',
+	Record<string, never>,
+	never
+>;
+
+/**
+ * Slice variation for *Hero2*
+ */
+type Hero2SliceVariation = Hero2SliceDefault;
+
+/**
+ * Hero2 Shared Slice
+ *
+ * - **API ID**: `hero2`
+ * - **Description**: Hero2
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type Hero2Slice = prismic.SharedSlice<'hero2', Hero2SliceVariation>;
+
+/**
  * Primary content in *ImageBlock → Default → Primary*
  */
 export interface ImageBlockSliceDefaultPrimary {
@@ -948,6 +977,78 @@ type TechListSliceVariation = TechListSliceDefault;
  */
 export type TechListSlice = prismic.SharedSlice<'tech_list', TechListSliceVariation>;
 
+/**
+ * Primary content in *Videos → Default → Primary*
+ */
+export interface VideosSliceDefaultPrimary {
+	/**
+	 * Youtube Video Id field in *Videos → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: asdhuashdushad
+	 * - **API ID Path**: videos.default.primary.youtube_video_id
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	youtube_video_id: prismic.KeyTextField;
+
+	/**
+	 * Title field in *Videos → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: videos.default.primary.title
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	title: prismic.KeyTextField;
+
+	/**
+	 * Thumbnail Override field in *Videos → Default → Primary*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: videos.default.primary.thumbnail_override
+	 * - **Documentation**: https://prismic.io/docs/field#image
+	 */
+	thumbnail_override: prismic.ImageField<never>;
+
+	/**
+	 * Caption field in *Videos → Default → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: videos.default.primary.caption
+	 * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+	 */
+	caption: prismic.RichTextField;
+}
+
+/**
+ * Default variation for Videos Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type VideosSliceDefault = prismic.SharedSliceVariation<
+	'default',
+	Simplify<VideosSliceDefaultPrimary>,
+	never
+>;
+
+/**
+ * Slice variation for *Videos*
+ */
+type VideosSliceVariation = VideosSliceDefault;
+
+/**
+ * Videos Shared Slice
+ *
+ * - **API ID**: `videos`
+ * - **Description**: Videos
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type VideosSlice = prismic.SharedSlice<'videos', VideosSliceVariation>;
+
 declare module '@prismicio/client' {
 	interface CreateClient {
 		(
@@ -1002,6 +1103,9 @@ declare module '@prismicio/client' {
 			HeroSliceDefaultPrimary,
 			HeroSliceVariation,
 			HeroSliceDefault,
+			Hero2Slice,
+			Hero2SliceVariation,
+			Hero2SliceDefault,
 			ImageBlockSlice,
 			ImageBlockSliceDefaultPrimary,
 			ImageBlockSliceVariation,
@@ -1014,7 +1118,11 @@ declare module '@prismicio/client' {
 			TechListSliceDefaultPrimaryItemItem,
 			TechListSliceDefaultPrimary,
 			TechListSliceVariation,
-			TechListSliceDefault
+			TechListSliceDefault,
+			VideosSlice,
+			VideosSliceDefaultPrimary,
+			VideosSliceVariation,
+			VideosSliceDefault
 		};
 	}
 }

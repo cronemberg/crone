@@ -5,7 +5,7 @@
 	export let slice: Content.RichTextSlice;
 </script>
 
-<div class="max-w-prose">
+<div class="">
 	<PrismicRichText
 		field={slice.primary.content}
 	/>

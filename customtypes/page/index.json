@@ -27,6 +27,12 @@
 				"fieldset": "Slice Zone",
 				"config": {
 					"choices": {
+						"hero2": {
+							"type": "SharedSlice"
+						},
+						"videos": {
+							"type": "SharedSlice"
+						},
 						"content_index": {
 							"type": "SharedSlice"
 						},

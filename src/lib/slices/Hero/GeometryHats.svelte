@@ -111,8 +111,6 @@
         customMaterial = loadedMesh.material;
     });
 
-    const placeholderGeometry = new THREE.BoxGeometry(2, 2, 2);
-    const placeholderMaterial = new THREE.MeshBasicMaterial({ color: 0xcccccc });
 
 </script>
 
@@ -136,9 +134,7 @@
                 rotation={[THREE.MathUtils.degToRad(90), THREE.MathUtils.degToRad(45), THREE.MathUtils.degToRad(20)]}  
             />
             {:else} 
-             <Threlte.Mesh 
-                 geometry={placeholderGeometry} 
-                 material={placeholderMaterial} />
+             <Threlte.Mesh />
         {/if}    
         
     </Float>

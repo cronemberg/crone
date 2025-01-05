@@ -68,8 +68,8 @@
 			<div class="relative z-10 row-span-1 row-start-1 -my-10 aspect-[1/1] md:col-span-1 md:col-start-2 md:mt-0 w-full overflow-visible h-[500px] md:h-[800px]">
 				<Scene />
 			</div>
-			<div class="col-start-1 md:rowstart-1">
-				<h1 class="-mb-4 md:-mb-7 text-[clamp(3rem,20vmin,13rem)] font-extrabold leading-none tracking-tighter text-nowrap" aria-label={slice.primary.the_name}>
+			<div class="col-start-1 md:rowstart-1 flex-col items-center md:items-start">
+				<h1 class="-mb-4 md:-mb-7 text-[clamp(3rem,20vmin,13rem)] font-extrabold leading-none tracking-tighter text-center md:text-left text-nowrap" aria-label={slice.primary.the_name}>
 				{#if name_letters.length}	
 					<span class="block text-slate-300">
 						{#each name_letters as letter}

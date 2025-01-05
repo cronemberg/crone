@@ -26,8 +26,8 @@ export let fallbackItemImage: ImageField;
 		const image = isFilled.image(item.data.hover_image) ? item.data.hover_image : fallbackItemImage;
 		return asImageSrc(image, {
 			fit: 'crop',
-			w: 320,
-			h: 180,
+			w: 220,
+			h: 320,
 			exp: -10
 		});
 	});
@@ -134,6 +134,6 @@ export let fallbackItemImage: ImageField;
 
 <!-- Hover element -->
 <div
-	class="hover-reveal pointer-events-none absolute left-0 top-0 -z-10 h-[180px] w-[320px] rounded-lg bg-cover bg-center opacity-0 transition-[background] duration-300"
+	class="hover-reveal pointer-events-none absolute left-0 top-0 -z-10 h-[320px] w-[220px] rounded-lg bg-cover bg-center opacity-0 transition-[background] duration-300"
 	style={currentIndex === undefined ? '' : `background-image: url(${contentImages[currentIndex]})`}
 ></div>

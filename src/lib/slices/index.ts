@@ -5,9 +5,11 @@ import ContactMe from './ContactMe/index.svelte';
 import ContentIndex from './ContentIndex/index.svelte';
 import Experience from './Experience/index.svelte';
 import Hero from './Hero/index.svelte';
+import Hero2 from './Hero2/index.svelte';
 import ImageBlock from './ImageBlock/index.svelte';
 import RichText from './RichText/index.svelte';
 import TechList from './TechList/index.svelte';
+import Videos from './Videos/index.svelte';
 
 export const components = {
 	biography: Biography,
@@ -15,7 +17,9 @@ export const components = {
 	content_index: ContentIndex,
 	experience: Experience,
 	hero: Hero,
+	hero2: Hero2,
 	image_block: ImageBlock,
 	rich_text: RichText,
-	tech_list: TechList
+	tech_list: TechList,
+	videos: Videos
 };

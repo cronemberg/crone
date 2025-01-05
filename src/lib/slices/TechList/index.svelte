@@ -48,12 +48,12 @@
 	{#each slice.primary.item as {tech_color, tech_name}}
 		<div class="tech-row mb-8 flex items-center justify-center gap-4 text-slate-700" aria-label={tech_name || undefined}>
 			{#each Array (15) as _, index}
-				<span class="tech-item text-8xl font-extrabold uppercase tracking-tighter whitespace-nowrap" 
+				<span class="tech-item text-5xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold uppercase tracking-tighter whitespace-nowrap" 
 				 style="color: {index == 7 && tech_color ? tech_color : 'inherit'}"
 				>
 					{tech_name}
 				</span>
-				<span class="text-3xl">
+				<span class="text-2xl sm:text-1xl md:text-2xl lg:text-3xl xl:text-3xl">
 					<IconCircle />
 				</span>
 
