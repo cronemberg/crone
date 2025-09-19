@@ -66,11 +66,11 @@ export let fallbackItemImage: ImageField;
 	};
 
 	const handleMouseMove = (e: MouseEvent) => {
-		const mousePos = { x: e.clientX, y: e.clientY + window.scrollY };
+		const mousePos = { x: e.clientX, y: e.clientY};
 
 		const speed = Math.sqrt(Math.pow(mousePos.x - lastMousePos.x, 2));
 
-		const maxY = window.scrollY + window.innerHeight - 350;
+		const maxY = window.innerHeight - 350;
 		const maxX = window.innerWidth - 250;
 
 		gsap.to('.hover-reveal', {

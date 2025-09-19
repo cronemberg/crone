@@ -22,7 +22,9 @@
 	let lastMousePos = { x: 0, y: 0 };
 	let currentIndex: number | undefined;
 
-	$: contentImages = items.map((item) => {
+	$: sortedItems = [...items].sort((a, b) => Number(a.data.position) - Number(b.data.position));
+
+	$: contentImages = sortedItems.map((item) => {
 		const image = isFilled.image(item.data.hover_image) ? item.data.hover_image : fallbackItemImage;
 		return asImageSrc(image, {
 			fit: 'crop',
@@ -67,8 +69,7 @@
 
 	const handleMouseMove = (e: MouseEvent) => {
 		const mousePos = { 
-			x: e.clientX, 
-			y: e.clientY + window.scrollY 
+			x: e.pageX, y: e.pageY
 		};
 
 		// Calculate layout offset of the hover-reveal parent element using getBoundingClientRect
@@ -87,8 +88,9 @@
 		const maxX = window.innerWidth - 250;
 
 		gsap.to('.hover-reveal', {
-			x: gsap.utils.clamp(0, maxX, mousePos.x - layoutOffsetX + 150), // Adjusting X using layout offset
-			y: gsap.utils.clamp(0, maxY, mousePos.y - layoutOffsetY - 63), // Adjusting Y using layout offset
+				// agora usamos "left" e "top" em vez de "x" e "y"
+			left: gsap.utils.clamp(0, maxX, mousePos.x - 200),
+			top: gsap.utils.clamp(0, maxY, mousePos.y - 400),
 			rotation: speed * 0.5 * (mousePos.x > lastMousePos.x ? 1 : -1),
 			ease: 'back.out(2)',
 			duration: 1
@@ -118,7 +120,7 @@
 <svelte:window on:mousemove={handleMouseMove} />
 
 <ul on:mouseleave={onMouseLeave} class="grid border-b border-b-slate-100">
-	{#each items as post, index (post.id + index)}
+	{#each sortedItems as post, index (post.id + index)}
 		<li
 			on:mouseenter={() => onMouseEnter(index)}
 			class="content-list-item opacity-0"

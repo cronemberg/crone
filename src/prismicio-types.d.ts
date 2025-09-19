@@ -44,6 +44,17 @@ interface LportfolioDocumentData {
 	hover_image: prismic.ImageField<never>;
 
 	/**
+	 * position field in *LPortfolio*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: lportfolio.position
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	position: prismic.KeyTextField;
+
+	/**
 	 * Slice Zone field in *LPortfolio*
 	 *
 	 * - **Field Type**: Slice Zone
@@ -183,7 +194,7 @@ export type PageDocument<Lang extends string = string> = prismic.PrismicDocument
 	Lang
 >;
 
-type ProjectsDocumentDataSlicesSlice = RichTextSlice | ImageBlockSlice;
+type ProjectsDocumentDataSlicesSlice = VideosSlice | RichTextSlice | ImageBlockSlice;
 
 /**
  * Content for ProjectsList documents
@@ -221,6 +232,17 @@ interface ProjectsDocumentData {
 	 * - **Documentation**: https://prismic.io/docs/field#image
 	 */
 	hover_image: prismic.ImageField<never>;
+
+	/**
+	 * position field in *ProjectsList*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: projects.position
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	position: prismic.KeyTextField;
 
 	/**
 	 * Slice Zone field in *ProjectsList*
@@ -673,6 +695,16 @@ export interface ExperienceSliceDefaultPrimaryItemItem {
 	 * - **Documentation**: https://prismic.io/docs/field#rich-text-title
 	 */
 	description: prismic.RichTextField;
+
+	/**
+	 * Document field in *Experience → Default → Primary → Item*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: experience.default.primary.item[].document
+	 * - **Documentation**: https://prismic.io/docs/field#image
+	 */
+	document: prismic.ImageField<never>;
 }
 
 /**

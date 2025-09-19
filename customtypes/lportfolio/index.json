@@ -34,6 +34,13 @@
 					"thumbnails": []
 				}
 			},
+			"position": {
+				"type": "Text",
+				"config": {
+					"label": "position",
+					"placeholder": ""
+				}
+			},
 			"slices": {
 				"type": "Slices",
 				"fieldset": "Slice Zone",

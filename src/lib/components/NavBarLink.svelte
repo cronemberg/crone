@@ -24,7 +24,7 @@
 		></span>
 
 		<span class="relative">
-			{label}
+			{label === 'About' ? 'About Me' : label}
 		</span>
 	</PrismicLink>
 {:else}
@@ -39,7 +39,7 @@
 		></span>
 
 		<span class="relative">
-			{label}
+			{label === 'About' ? 'About Me' : label}
 		</span>
 	</PrismicLink>
 {/if}
