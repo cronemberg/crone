@@ -1,39 +1,34 @@
 import { createClient } from '$lib/prismicio';
 
-export async function load({ fetch, cookies, locals }) {
+export async function load({ fetch, cookies, params }) {
     const client = createClient({ fetch, cookies });
-    const lang = locals.lang || 'en-us';
+    const lang = params.lang || 'en-us';
 
     try {
-        const page = await client.getByUID('page', 'home', { 
-            lang,
-            fetchLinks: [
-                'projects.title', 
-                'projects.hover_image',
-                'projects.position'
-            ] 
-        });
-
-        // Busca os projetos para alimentar a ContentList que está na Home
-        const items = await client.getAllByType('projects', { lang });
+        const page = await client.getByUID('projects', params.uid, { lang });
 
         return {
             page,
-            items, 
-            title: page.data.meta_title || "Portfolio",
-            meta_description: page.data.meta_description || "",
+            title: page.data.title,
+            meta_description: page.data.meta_description,
             meta_image: page.data.meta_image?.url || "",
             lang
         };
     } catch (e) {
-        console.error("Erro no load da Home:", e);
-        // Fallback para en-us
-        const fallbackPage = await client.getByUID('page', 'home', { lang: 'en-us' });
-        const fallbackItems = await client.getAllByType('projects', { lang: 'en-us' });
+        const page = await client.getByUID('projects', params.uid, { lang: 'en-us' });
         return {
-            page: fallbackPage,
-            items: fallbackItems,
+            page,
+            title: page.data.title,
             lang: 'en-us'
         };
     }
+}
+
+export async function entries() {
+    const client = createClient();
+    const pages = await client.getAllByType('projects', { lang: '*' });
+    return pages.map((page) => ({ 
+        uid: page.uid, 
+        lang: page.lang 
+    }));
 }

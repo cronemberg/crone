@@ -1,24 +1,38 @@
 import { createClient } from '$lib/prismicio';
 
-export async function load({ fetch, cookies, locals }) {
+export async function load({ fetch, cookies, params }) {
     const client = createClient({ fetch, cookies });
     
-    // Captura o idioma do sistema (configurado pelo seu switcher/hooks)
-    const lang = locals.lang || 'en-us';
+    // Detecta o idioma da URL ou usa o padrão
+    const lang = params.lang || 'en-us';
 
-    // 1. Busca a página que contém a Slice (ex: portfólio geral)
-    const page = await client.getSingle('lportfolio', { lang });
+    try {
+        // Busca APENAS o documento solicitado pelo UID da URL
+        const page = await client.getByUID('lportfolio', params.uid, { lang });
 
-    // 2. Busca os ITENS da lista (os projetos) garantindo o idioma
-    // Isso resolve o problema dos títulos em inglês nas listas
-    const items = await client.getAllByType('projects', { lang });
+        return {
+            page,
+            title: page.data.meta_title || page.data.title,
+            meta_description: page.data.meta_description,
+            meta_image: page.data.meta_image?.url || "",
+            lang
+        };
+    } catch (e) {
+        // Se não existir no idioma atual, tenta o inglês como fallback
+        const page = await client.getByUID('lportfolio', params.uid, { lang: 'en-us' });
+        return {
+            page,
+            title: page.data.meta_title || page.data.title,
+            lang: 'en-us'
+        };
+    }
+}
 
-    return {
-        page,
-        items, // Esta lista agora contém os títulos traduzidos
-        title: page.data.meta_title || page.data.title,
-        meta_description: page.data.meta_description,
-        meta_image: page.data.meta_image?.url || "",
-        lang
-    };
+export async function entries() {
+    const client = createClient();
+    const pages = await client.getAllByType('lportfolio', { lang: '*' });
+    return pages.map((page) => ({ 
+        uid: page.uid,
+        lang: page.lang 
+    }));
 }
