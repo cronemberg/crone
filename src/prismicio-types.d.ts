@@ -530,9 +530,188 @@ export type BiographySliceDefault = prismic.SharedSliceVariation<
 >;
 
 /**
+ * Primary content in *Biography → DoubleButtons → Primary*
+ */
+export interface BiographySliceDoubleButtonsPrimary {
+	/**
+	 * Heading field in *Biography → DoubleButtons → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: biography.doubleButtons.primary.heading
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	heading: prismic.KeyTextField;
+
+	/**
+	 * Description field in *Biography → DoubleButtons → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: biography.doubleButtons.primary.description
+	 * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+	 */
+	description: prismic.RichTextField;
+
+	/**
+	 * Button Label field in *Biography → DoubleButtons → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: biography.doubleButtons.primary.button_label
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	button_label: prismic.KeyTextField;
+
+	/**
+	 * Button Link field in *Biography → DoubleButtons → Primary*
+	 *
+	 * - **Field Type**: Link
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: biography.doubleButtons.primary.button_link
+	 * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+	 */
+	button_link: prismic.LinkField;
+
+	/**
+	 * Button Label 2 field in *Biography → DoubleButtons → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: biography.doubleButtons.primary.button_label_2
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	button_label_2: prismic.KeyTextField;
+
+	/**
+	 * Button Link 2 field in *Biography → DoubleButtons → Primary*
+	 *
+	 * - **Field Type**: Link
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: biography.doubleButtons.primary.button_link_2
+	 * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+	 */
+	button_link_2: prismic.LinkField;
+
+	/**
+	 * Avatar field in *Biography → DoubleButtons → Primary*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: biography.doubleButtons.primary.avatar
+	 * - **Documentation**: https://prismic.io/docs/field#image
+	 */
+	avatar: prismic.ImageField<never>;
+}
+
+/**
+ * DoubleButtons variation for Biography Slice
+ *
+ * - **API ID**: `doubleButtons`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type BiographySliceDoubleButtons = prismic.SharedSliceVariation<
+	'doubleButtons',
+	Simplify<BiographySliceDoubleButtonsPrimary>,
+	never
+>;
+
+/**
+ * Primary content in *Biography → Contact + File Buttons → Primary*
+ */
+export interface BiographySliceContactFileButtonsPrimary {
+	/**
+	 * Heading field in *Biography → Contact + File Buttons → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: biography.contactFileButtons.primary.heading
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	heading: prismic.KeyTextField;
+
+	/**
+	 * Description field in *Biography → Contact + File Buttons → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: biography.contactFileButtons.primary.description
+	 * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+	 */
+	description: prismic.RichTextField;
+
+	/**
+	 * Button Label field in *Biography → Contact + File Buttons → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: biography.contactFileButtons.primary.button_label
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	button_label: prismic.KeyTextField;
+
+	/**
+	 * Button Link field in *Biography → Contact + File Buttons → Primary*
+	 *
+	 * - **Field Type**: Link
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: biography.contactFileButtons.primary.button_link
+	 * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+	 */
+	button_link: prismic.LinkField;
+
+	/**
+	 * Button Label 2 field in *Biography → Contact + File Buttons → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: biography.contactFileButtons.primary.button_label_2
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	button_label_2: prismic.KeyTextField;
+
+	/**
+	 * Button File field in *Biography → Contact + File Buttons → Primary*
+	 *
+	 * - **Field Type**: Link to Media
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: biography.contactFileButtons.primary.button_file
+	 * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+	 */
+	button_file: prismic.LinkToMediaField;
+
+	/**
+	 * Avatar field in *Biography → Contact + File Buttons → Primary*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: biography.contactFileButtons.primary.avatar
+	 * - **Documentation**: https://prismic.io/docs/field#image
+	 */
+	avatar: prismic.ImageField<never>;
+}
+
+/**
+ * Contact + File Buttons variation for Biography Slice
+ *
+ * - **API ID**: `contactFileButtons`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type BiographySliceContactFileButtons = prismic.SharedSliceVariation<
+	'contactFileButtons',
+	Simplify<BiographySliceContactFileButtonsPrimary>,
+	never
+>;
+
+/**
  * Slice variation for *Biography*
  */
-type BiographySliceVariation = BiographySliceDefault;
+type BiographySliceVariation =
+	| BiographySliceDefault
+	| BiographySliceDoubleButtons
+	| BiographySliceContactFileButtons;
 
 /**
  * Biography Shared Slice
@@ -1117,8 +1296,12 @@ declare module '@prismicio/client' {
 			AllDocumentTypes,
 			BiographySlice,
 			BiographySliceDefaultPrimary,
+			BiographySliceDoubleButtonsPrimary,
+			BiographySliceContactFileButtonsPrimary,
 			BiographySliceVariation,
 			BiographySliceDefault,
+			BiographySliceDoubleButtons,
+			BiographySliceContactFileButtons,
 			ContactMeSlice,
 			ContactMeSliceVariation,
 			ContactMeSliceDefault,
