@@ -1,37 +1,51 @@
 <script>
-	import "../app.css";
-	import '@fontsource-variable/josefin-sans';
-	import { PrismicPreview } from '@prismicio/svelte/kit';
-	import { page } from '$app/stores';
-	import { repositoryName } from '$lib/prismicio';
-	import Footer from '$lib/components/Footer.svelte';
-	import Header from '$lib/components/Header.svelte';
+    import "../app.css";
+    import '@fontsource-variable/josefin-sans';
+    import { PrismicPreview } from '@prismicio/svelte/kit';
+    import { page } from '$app/stores';
+    import { repositoryName } from '$lib/prismicio';
+    import Footer from '$lib/components/Footer.svelte';
+    import Header from '$lib/components/Header.svelte';
 
-	export let data;
+    export let data;
+
+    // Referência direta para a imagem na sua pasta static
+    const defaultImage = "https://crone.vercel.app/CrownSimple.png"; 
 </script>
 
 <svelte:head>
-	<title>{$page.data.title}</title>
-	{#if $page.data.meta_description}
-		<meta name="description" content={$page.data.meta_description} />
-	{/if}
-	{#if $page.data.meta_title}
-		<meta name="og:title" content={$page.data.meta_title} />
-	{/if}
-	{#if $page.data.meta_image}
-		<meta name="og:image" content={$page.data.meta_image} />
-		<meta name="twitter:card" content="summary_large_image" />
-	{/if}
+    <title>{$page.data.title}</title>
+    
+    {#if $page.data.meta_description}
+        <meta name="description" content={$page.data.meta_description} />
+        <meta property="og:description" content={$page.data.meta_description} />
+    {/if}
+
+    <meta property="og:type" content="website" />
+    
+    {#if $page.data.meta_title}
+        <meta property="og:title" content={$page.data.meta_title} />
+    {/if}
+
+    <meta property="og:image" content={$page.data.meta_image || defaultImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={$page.data.meta_image || defaultImage} />
 </svelte:head>
 
 <Header settings={data.settings} />
+
 <main>
-	<slot />
+    <slot />
 </main>
+
 <div class="background-gradient absolute inset-0 -z-50 max-h-screen" />
 <div
-	class="pointer-events-none absolute inset-0 -z-40 h-full bg-[url('/noisetexture.jpg')] opacity-20 mix-blend-soft-light"
+    class="pointer-events-none absolute inset-0 -z-40 h-full bg-[url('/noisetexture.jpg')] opacity-20 mix-blend-soft-light"
 ></div>
+
 <Footer settings={data.settings} />
 
 <PrismicPreview {repositoryName} />

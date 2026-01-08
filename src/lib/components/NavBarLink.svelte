@@ -4,9 +4,11 @@
     import { PrismicLink } from '@prismicio/svelte';
 
     export let field: LinkField;
-    export let label: KeyTextField; // Este label virá traduzido do Prismic agora
+    export let label: KeyTextField; 
     export let onLinkClick: (event: MouseEvent) => void;
     export let type: 'desktop' | 'mobile';
+    // Nova prop para identificar se é um botão de "canto" (Contato/Idioma)
+    export let isEdge: boolean = false; 
 
     const path = asLink(field);
     $: isActive = path && $page.url.pathname.includes(path);
@@ -30,7 +32,8 @@
     </PrismicLink>
 {:else}
     <PrismicLink
-        class="group relative block overflow-hidden rounded px-3 text-3xl font-bold text-slate-900"
+        class="group relative block overflow-hidden rounded px-3 text-3xl font-bold text-slate-900 
+               {isEdge ? 'mr-10 -translate-x-4' : ''}" 
         {field}
         on:click={onLinkClick}
         {...$$restProps}

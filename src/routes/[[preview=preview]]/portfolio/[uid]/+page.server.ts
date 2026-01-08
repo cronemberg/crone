@@ -1,30 +1,24 @@
 import { createClient } from '$lib/prismicio';
 
-export async function load({ params, fetch, cookies, locals }) {
+export async function load({ fetch, cookies, locals }) {
     const client = createClient({ fetch, cookies });
+    
+    // Captura o idioma do sistema (configurado pelo seu switcher/hooks)
+    const lang = locals.lang || 'en-us';
 
-    // Adicionado o parâmetro lang vindo do seu hooks.server.ts
-    const page = await client.getByUID('lportfolio', params.uid, { lang: locals.lang });
+    // 1. Busca a página que contém a Slice (ex: portfólio geral)
+    const page = await client.getSingle('lportfolio', { lang });
+
+    // 2. Busca os ITENS da lista (os projetos) garantindo o idioma
+    // Isso resolve o problema dos títulos em inglês nas listas
+    const items = await client.getAllByType('projects', { lang });
 
     return {
         page,
-        title: page.data.title,
+        items, // Esta lista agora contém os títulos traduzidos
+        title: page.data.meta_title || page.data.title,
         meta_description: page.data.meta_description,
-        meta_title: page.data.meta_title || page.data.title,
-        meta_image: page.data.meta_image.url,
-        lang: locals.lang // Útil para lógica de interface se necessário
+        meta_image: page.data.meta_image?.url || "",
+        lang
     };
-}
-
-export async function entries() {
-    const client = createClient();
-
-    // lang: '*' garante que o Prismic retorne as versões de todos os idiomas configurados
-    const pages = await client.getAllByType('lportfolio', { lang: '*' });
-
-    return pages.map((page) => {
-        return { 
-            uid: page.uid
-        };
-    });
 }
