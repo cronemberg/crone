@@ -5,30 +5,31 @@ import sm from '../../slicemachine.config.json';
 /**
  * The project's Prismic repository name.
  */
-export const repositoryName = import.meta.env.VITE_PRISMIC_ENVIRONMENT || sm.repositoryName;
+export const repositoryName =
+	import.meta.env.VITE_PRISMIC_ENVIRONMENT || sm.repositoryName;
 
 /**
- * A list of Route Resolver objects that define how a document's `url` field is resolved.
- *
- * {@link https://prismic.io/docs/route-resolver#route-resolver}
+ * Route resolvers
  */
-// TODO: Update the routes array to match your project's route structure.
 const routes: prismic.ClientConfig['routes'] = [
 	{ type: 'page', path: '/', uid: 'home' },
 	{ type: 'page', path: '/:uid' },
 	{ type: 'lportfolio', path: '/portfolio/:uid' },
-	{ type: 'projects', path:'/projects/:uid'}
+	{ type: 'projects', path: '/projects/:uid' }
 ];
 
 /**
- * Creates a Prismic client for the project's repository. The client is used to
- * query content from the Prismic API.
- *
- * @param config - Configuration for the Prismic client.
+ * Creates a Prismic client for the project.
  */
 export const createClient = ({ cookies, ...config }: CreateClientConfig = {}) => {
 	const client = prismic.createClient(repositoryName, {
 		routes,
+
+		// 🔥 ISSO É O PONTO-CHAVE
+		fetchOptions: {
+			cache: 'no-store'
+		},
+
 		...config
 	});
 

@@ -12,14 +12,21 @@
 
     const path = asLink(field);
     $: isActive = path && $page.url.pathname.includes(path);
+    $: isMail = path && typeof path === 'string' && path.startsWith('mailto:');
+
+    $: openInNewTab =
+	!isMail &&
+	(field?.link_type === 'Web' || field?.link_type === 'Media');
+
 </script>
 
 {#if type === 'desktop'}
     <PrismicLink
         class="group relative block overflow-hidden rounded px-3 py-1 text-base font-bold text-slate-900"
-        {field}
+        field={field}
+        target={openInNewTab ? '_blank' : undefined}
+        rel={openInNewTab ? 'noopener noreferrer' : undefined}
         on:click={onLinkClick}
-        {...$$restProps}
         aria-current={isActive ? 'page' : undefined}
     >
         <span
@@ -33,10 +40,11 @@
 {:else}
     <PrismicLink
         class="group relative block overflow-hidden rounded px-3 text-3xl font-bold text-slate-900 
-               {isEdge ? 'mr-10 -translate-x-4' : ''}" 
-        {field}
+		   {isEdge ? 'mr-10 -translate-x-4' : ''}" 
+        field={field}
+        target={openInNewTab ? '_blank' : undefined}
+        rel={openInNewTab ? 'noopener noreferrer' : undefined}
         on:click={onLinkClick}
-        {...$$restProps}
         aria-current={isActive ? 'page' : undefined}
     >
         <span

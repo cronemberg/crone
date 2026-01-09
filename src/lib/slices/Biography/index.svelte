@@ -6,7 +6,6 @@
     import { PrismicRichText } from '@prismicio/svelte';
     import Avatar from './Avatar.svelte';
 
-    // Importe o ícone de download (ou outro de sua preferência)
     import IconDownload from '~icons/line-md/downloading-loop'; 
     import IconEmail from '~icons/line-md/email';
 
@@ -24,19 +23,18 @@
         </div>
 
         <div class="flex flex-wrap gap-4 col-start-1">
-            <Button 
-                linkField={slice.primary.button_link} 
-                label={slice.primary.button_label} 
-                icon={IconEmail}
-            />
-            
-            <Button 
-                linkField={slice.primary.button_file} 
-                label={slice.primary.button_label_2} 
-                icon={IconDownload} 
-            />
+            {#if 'button_file' in slice.primary}
+                <Button 
+                    linkField={slice.primary.button_file} 
+                    label={slice.primary.button_label_2} 
+                    icon={IconDownload} 
+                />
+            {/if}
         </div>
             
-        <Avatar image={slice.primary.avatar} class="row-start-1 max-w-sm md:col-start-2 md:row-end-3"/>
+        <Avatar
+            image={slice.primary.avatar}
+            class="row-start-1 max-w-sm md:col-start-2 md:row-end-3"
+        />
     </div>
 </Bounded>

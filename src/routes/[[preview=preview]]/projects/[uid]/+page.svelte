@@ -1,9 +1,6 @@
 <script>
-	import ContentBody from "$lib/components/ContentBody.svelte";
-
-
-	export let data;
-
+    import ContentBody from "$lib/components/ContentBody.svelte";
+    export let data;
 </script>
 
-<ContentBody page={data.page}/>
+<ContentBody page={data.page} lang={data.lang}/>

@@ -15,7 +15,6 @@
     export let items: any[] = []; 
     export let fallbackItemImage: ImageField;
     export let viewMoreText: KeyTextField = 'Read More';
-
     let lastMousePos = { x: 0, y: 0 };
     let currentIndex: number | undefined;
 

@@ -1,27 +1,48 @@
 import type { Client, Content, SliceMapper } from '@prismicio/client';
-import type { ComponentProps } from 'svelte';
 
-import ContentIndex from './index.svelte';
-
-type Context = { client: Client<Content.AllDocumentTypes> };
+type Context = { 
+    client: Client<Content.AllDocumentTypes>;
+    lang: string; 
+};
 
 const mapper: SliceMapper<
     Content.ContentIndexSlice,
-    { slice: Content.ContentIndexSlice; items: Content.LportfolioDocument<string>[] | Content.ProjectsDocument<string>[] },
+    { 
+        slice: Content.ContentIndexSlice; 
+        items: Content.LportfolioDocument<string>[] | Content.ProjectsDocument<string>[] 
+    },
     Context
 > = async ({ slice, context }) => {
-    const { client } = context;
+    const { client, lang } = context;
 
     try {
-        const items =
-            slice.primary.content_type === "Portfolio"
-                ? await client.getAllByType('lportfolio')
-                : await client.getAllByType('projects');
+        const type =
+            slice.primary.content_type === 'Portfolio'
+                ? 'lportfolio'
+                : 'projects';
 
-        return { slice, items };
+        // 1️⃣ Tentamos no idioma selecionado
+        let items = await client.getAllByType(type, {
+            lang
+        });
+
+        // 2️⃣ Se não existir tradução, fallback explícito
+        if (!items.length && lang !== 'en-us') {
+            items = await client.getAllByType(type, {
+                lang: 'en-us'
+            });
+        }
+
+        return {
+            slice,
+            items
+        };
     } catch (error) {
-        console.error('Error fetching items:', error);
-        return { slice, items: [] }; // Return an empty array or handle the error as needed
+        console.error('Erro no Mapper do ContentIndex:', error);
+        return {
+            slice,
+            items: []
+        };
     }
 };
 

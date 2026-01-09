@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { currentLang } from '$lib/stores/lang';
     import { onMount } from 'svelte';
     import { fade } from 'svelte/transition'; 
     import type { Content } from '@prismicio/client';
@@ -9,14 +8,15 @@
 
     export let slice: Content.HeroSlice;
 
-    const name_letters = slice.primary.the_name?.split("") ?? "";
+    // 1. Recebe o contexto enviado pelo SliceZone
+    export let context: { lang: string };
 
-	const translations = {
-        'en-us': { interactive: 'Interactive' },
-        'pt-br': { interactive: 'Interativo' }
-    };
-	
-    $: isPt = $page.params.lang === 'pt-br';
+    $: name_letters = slice.primary.the_name?.split("") ?? [];
+
+    // 2. Lógica reativa: Se o contexto mudar, o label muda instantaneamente
+    // O fallback é o dado da página ou en-us
+    $: currentLang = context?.lang || $page.data.lang || 'en-us';
+    $: isPt = currentLang === 'pt-br';
     $: interactiveLabel = isPt ? "Interativo" : "Interactive";
 
     let hasInteracted = false;
@@ -24,7 +24,6 @@
     onMount(() => {
         const tl = gsap.timeline();
 
-        // 1. Letras do Nome
         tl.fromTo(".name-animation", 
             { x: -100, opacity: 0, rotate: -10 },
             { 
@@ -37,7 +36,6 @@
             }
         );
 
-        // 2. Taglines
         tl.fromTo(".job-title, .job-title2",
             { y: 20, opacity: 0, scale: 1.2 },
             { 
@@ -51,7 +49,6 @@
             "-=0.5"
         );
 
-        // 3. Interactive (Note o opacity: 1 aqui, pois ele começa com opacity-0 no HTML)
         tl.fromTo(".interactive-exclusive",
             { x: 30, opacity: 0 },
             { 
@@ -105,11 +102,9 @@
                     {#if !hasInteracted}
                         <div 
                             transition:fade={{ duration: 600 }} 
-								class="interactive-exclusive opacity-0 absolute flex flex-col md:flex-row items-center gap-2 pointer-events-none whitespace-nowrap
-									/* Mobile: Centralizado acima do nome */
-									-top-2 left-0 right-0 justify-center
-									/* Desktop: Reset mobile, posiciona à direita do nome */
-									md:top-1/2 md:-translate-y-1/2 md:left-full md:right-auto md:justify-start md:translate-x-10 md:mt-4"
+                            class="interactive-exclusive opacity-0 absolute flex flex-col md:flex-row items-center gap-2 pointer-events-none whitespace-nowrap
+                                -top-2 left-0 right-0 justify-center
+                                md:top-1/2 md:-translate-y-1/2 md:left-full md:right-auto md:justify-start md:translate-x-10 md:mt-4"
                         >
                             <span class="text-orange-400 text-sm font-bold uppercase tracking-widest animate-pulse">
                                 {interactiveLabel}

@@ -28,8 +28,8 @@ export async function entries() {
     // 3. Garante que o SvelteKit conheça os UIDs de todos os idiomas para pré-renderização
     const pages = await client.getAllByType('page', { lang: '*' });
 
-    return pages.map((page) => {
-        return { 
+    return pages.map((page) => { 
+        return {
             uid: page.uid 
         };
     });

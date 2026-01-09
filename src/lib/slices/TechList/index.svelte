@@ -39,11 +39,13 @@
 </script>
 
 <section data-slice-type={slice.slice_type} data-slice-variation={slice.variation} class="overflow-hidden" bind:this={component}>
-	<Bounded as="div">
-		<Heading size="xl" class="mb-8" tag="h2">
-			{slice.primary.heading}
-		</Heading>
-	</Bounded>
+    <Bounded as="div">
+        <Heading size="xl" class="mb-8 mobile-heading" tag="h2">
+            {slice.primary.heading}
+        </Heading>
+    </Bounded>
+
+
 
 	{#each slice.primary.item as {tech_color, tech_name}}
 		<div class="tech-row mb-8 flex items-center justify-center gap-4 text-slate-700" aria-label={tech_name || undefined}>
@@ -63,3 +65,15 @@
 
 	
 </section>
+
+<style>
+    /* A classe :global é necessária se o Heading for um componente separado, 
+       para garantir que o estilo "atravesse" o componente.
+    */
+    @media (max-width: 640px) {
+        :global(.mobile-heading) {
+            font-size: 3.5rem !important; /* Ajuste o tamanho conforme desejar */
+            line-height: 1.1 !important;
+        }
+    }
+</style>
