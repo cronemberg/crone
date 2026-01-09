@@ -10,11 +10,11 @@
     export let data;
 
     // Referência direta para a imagem na sua pasta static
-    const defaultImage = "https://crone.vercel.app/CrownSimple.png"; 
+    const defaultImage = "https://crone.vercel.app/CrownSimple.webp"; 
 </script>
 
 <svelte:head>
-    <title>{$page.data.title}</title>
+    <title>{$page.data.title || "Crone Portfolio"}</title>
     
     {#if $page.data.meta_description}
         <meta name="description" content={$page.data.meta_description} />
@@ -23,15 +23,13 @@
 
     <meta property="og:type" content="website" />
     
-    {#if $page.data.meta_title}
-        <meta property="og:title" content={$page.data.meta_title} />
-    {/if}
+        <meta property="og:title" content={$page.data.meta_title || $page.data.title || "Crone Portfolio"} />
 
     <meta property="og:image" content={$page.data.meta_image || defaultImage} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
+    <meta property="og:image:width" content="1080" />
+    <meta property="og:image:height" content="1080" />
     
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content="summary" />
     <meta name="twitter:image" content={$page.data.meta_image || defaultImage} />
 </svelte:head>
 
