@@ -29,6 +29,7 @@
                 on:touchstart={handleInteraction}
                 role="presentation"
                 class="interactive-zone relative z-10 row-span-1 row-start-1 -my-10 aspect-[1/1] md:col-span-1 md:col-start-2 md:mt-0 w-full overflow-visible h-[160px] sm:h-[170px] md:h-[170px]"
+				class:hover-enabled={!hasInteracted}
             >
                 <Scene />
 
@@ -55,6 +56,16 @@
 
     .interactive-zone:active {
         cursor: url("https://api.iconify.design/ph:navigation-arrow-duotone.svg?color=white") 2 2, pointer;
+    }
+
+    .interactive-zone {
+        transition: transform 0.5s ease-out, filter 0.5s ease-out;
+    }
+    
+    /* Aumenta a escala e o brilho APENAS enquanto não houver interação */
+    .hover-enabled:hover { 
+        transform: scale(1.02); 
+        filter: brightness(1.15) drop-shadow(0px 10px 20px rgba(0, 0, 0, 0.2)); 
     }
 
     /* Animação de pulso para o estilo minimalista */
