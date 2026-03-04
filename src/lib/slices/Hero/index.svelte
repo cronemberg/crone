@@ -9,7 +9,6 @@
     export let slice: Content.HeroSlice;
     export let context: { lang: string };
 
-    // 1. Estrutura de dados: Lágrimas no 2º clique, Fúria no 4º
     $: name_letters = slice.primary.the_name?.split("").map((char, index) => ({
         char,
         id: index,
@@ -29,7 +28,7 @@
     onMount(() => {
         const tl = gsap.timeline();
 
-        // Animação das letras
+        // 1. Resetamos qualquer estado prévio e garantimos a animação do zero
         tl.fromTo(".name-animation", 
             { x: -100, opacity: 0, rotate: -10 },
             { 
@@ -42,29 +41,15 @@
             }
         );
 
-        // Animação dos cargos
         tl.fromTo(".job-title, .job-title2",
             { y: 20, opacity: 0, scale: 1.2 },
-            { 
-                y: 0, 
-                opacity: 1, 
-                duration: 1, 
-                scale: 1, 
-                ease: 'elastic.out(1,0.3)', 
-                stagger: 0.1 
-            },
+            { y: 0, opacity: 1, duration: 1, scale: 1, ease: 'elastic.out(1,0.3)', stagger: 0.1 },
             "-=0.5"
         );
 
-        // Animação do aviso Interactive (Exatamente como o antigo)
         tl.fromTo(".interactive-exclusive",
             { x: 30, opacity: 0 },
-            { 
-                x: 0, 
-                opacity: 1, 
-                duration: 1, 
-                ease: 'power2.out' 
-            },
+            { x: 0, opacity: 1, duration: 1, ease: 'power2.out' },
             "-=0.8"
         );
     });
@@ -90,9 +75,7 @@
                 }
             }, 5000);
         }
-
         name_letters = [...name_letters];
-
         setTimeout(() => {
             const i = name_letters.findIndex(l => l.id === id);
             if (i !== -1) {
@@ -103,14 +86,26 @@
     }
 </script>
 
-<section data-slice-type={slice.slice_type} data-slice-variation={slice.variation} class="px-4 md:px-6">
-    <div class="mx-auto w-full max-w-7xl">
+<section data-slice-type={slice.slice_type} data-slice-variation={slice.variation} class="px-4 md:px-6 relative overflow-visible">
+    <div class="mx-auto w-full max-w-7xl relative">
+        
+        {#if !hasInteracted}
+            <div 
+                transition:fade={{ duration: 600 }} 
+                class="interactive-exclusive opacity-0 absolute inset-0 z-50 pointer-events-none flex items-center justify-center"
+            >
+                <span class="text-orange-400 text-xs font-bold uppercase tracking-[.4em] animate-pulse
+                    /* No mobile ele desce para ficar abaixo do Hero/Nome */
+                    translate-y-[20rem] md:translate-y-0">
+                    {interactiveLabel}
+                </span>
+            </div>
+        {/if}
+
         <div class="grid min-h-[65vh] grid-cols-1 items-center md:grid-cols-2">
             
             <div 
                 on:mousedown={() => hasInteracted = true} 
-                on:touchstart={() => hasInteracted = true}
-                role="presentation"
                 class="interactive-zone relative z-10 row-span-1 row-start-1 -my-10 aspect-[1/1] md:col-span-1 md:col-start-2 md:mt-0 w-full overflow-visible h-[500px] md:h-[800px]"
             >
                 <Scene />
@@ -122,7 +117,7 @@
                         <span class="block">
                             {#each name_letters as letter (letter.id)}
                                 <span 
-                                    class="name-animation letter-interactive inline-block relative transition-all duration-300"
+                                    class="name-animation letter-interactive inline-block relative opacity-0 transition-all duration-300"
                                     class:is-stunned={letter.isAngry}
                                     style="
                                         transform: {letter.clicked ? `scale(${letter.randomScale}) translateY(${letter.randomScale > 1 ? '-30px' : '20px'})` : 'scale(1) translateY(0)'}; 
@@ -152,25 +147,10 @@
                     {slice.primary.tag_line}
                 </span>
 
-                <div class="mt-2 flex items-center relative">
+                <div class="mt-2 flex items-center">
                     <span class="job-title2 block bg-gradient-to-tr from-yellow-500 via-yellow-200 to-yellow-500 bg-clip-text text-transparent text-2xl font-bold tracking-[.1em] md:text-4xl opacity-0">
                         {slice.primary.tag_line_2}
                     </span>
-
-                    {#if !hasInteracted}
-                        <div 
-                            transition:fade={{ duration: 600 }} 
-                            class="interactive-exclusive opacity-0 absolute flex flex-col md:flex-row items-center gap-2 pointer-events-none whitespace-nowrap
-                                /* Mobile: Centralizado acima das profissões */
-                                -top-2 left-0 right-0 justify-center
-                                /* Desktop: Alinhado à direita do Nome e profissões */
-                                md:-top-32 md:left-full md:right-auto md:justify-start md:translate-x-10"
-                        >
-                            <span class="text-orange-400 text-sm font-bold uppercase tracking-widest animate-pulse">
-                                {interactiveLabel}
-                            </span>
-                        </div>
-                    {/if}
                 </div>
             </div>
         </div>
@@ -178,6 +158,10 @@
 </section>
 
 <style>
+    .name-animation {
+        opacity: 0;
+    }
+
     .interactive-zone, .letter-interactive {
         cursor: url("https://api.iconify.design/ph:navigation-arrow-fill.svg?color=white") 2 2, pointer;
         user-select: none;
