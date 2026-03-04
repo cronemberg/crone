@@ -1,0 +1,69 @@
+[
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "default",
+		"primary": {
+			"tiktok_video_id": {
+				"__TYPE__": "FieldContent",
+				"value": "next",
+				"type": "Text"
+			},
+			"title_tiktok": {
+				"__TYPE__": "FieldContent",
+				"value": "he",
+				"type": "Text"
+			},
+			"thumbnail_override_tiktok": {
+				"origin": {
+					"id": "main",
+					"url": "https://images.unsplash.com/photo-1589321599763-d66926c29613",
+					"width": 3168,
+					"height": 4752
+				},
+				"url": "https://images.unsplash.com/photo-1589321599763-d66926c29613",
+				"width": 3168,
+				"height": 4752,
+				"edit": {
+					"zoom": 1,
+					"crop": {
+						"x": 0,
+						"y": 0
+					},
+					"background": "transparent"
+				},
+				"credits": null,
+				"alt": null,
+				"__TYPE__": "ImageContent",
+				"thumbnails": {}
+			},
+			"caption_tiktok": {
+				"__TYPE__": "StructuredTextContent",
+				"value": [
+					{
+						"type": "paragraph",
+						"content": {
+							"text": "Sint sint enim labore in elit."
+						}
+					}
+				]
+			},
+			"tiktok_username": {
+				"__TYPE__": "FieldContent",
+				"value": "greatly",
+				"type": "Text"
+			},
+			"richtext_for_tiktok": {
+				"__TYPE__": "StructuredTextContent",
+				"value": [
+					{
+						"type": "paragraph",
+						"content": {
+							"text": "Duis dolor eiusmod ex cillum incididunt dolor occaecat qui non occaecat velit. Est eu dolor reprehenderit irure exercitation laborum anim ad aute commodo sint cupidatat dolore do. In occaecat consectetur adipisicing minim anim cupidatat consectetur amet."
+						}
+					}
+				]
+			}
+		},
+		"items": []
+	}
+]

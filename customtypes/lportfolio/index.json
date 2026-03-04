@@ -46,6 +46,9 @@
 				"fieldset": "Slice Zone",
 				"config": {
 					"choices": {
+						"tiktok_slice": {
+							"type": "SharedSlice"
+						},
 						"videos": {
 							"type": "SharedSlice"
 						},

@@ -1,0 +1,66 @@
+{
+  "id": "tiktok_slice",
+  "type": "SharedSlice",
+  "name": "TiktokSlice",
+  "description": "TiktokSlice",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": "",
+      "primary": {
+        "tiktok_username": {
+          "type": "Text",
+          "config": {
+            "label": "TikTok Username",
+            "placeholder": ""
+          }
+        },
+        "tiktok_video_id": {
+          "type": "Text",
+          "config": {
+            "label": "TikTok Video ID",
+            "placeholder": ""
+          }
+        },
+        "title_tiktok": {
+          "type": "Text",
+          "config": {
+            "label": "Title Tiktok",
+            "placeholder": ""
+          }
+        },
+        "richtext_for_tiktok": {
+          "type": "StructuredText",
+          "config": {
+            "label": "RichText For Tiktok",
+            "placeholder": "",
+            "allowTargetBlank": true,
+            "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
+          }
+        },
+        "thumbnail_override_tiktok": {
+          "type": "Image",
+          "config": {
+            "label": "Thumbnail Override Tiktok",
+            "constraint": {},
+            "thumbnails": []
+          }
+        },
+        "caption_tiktok": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Caption Tiktok",
+            "placeholder": "",
+            "allowTargetBlank": true,
+            "single": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}

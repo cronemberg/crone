@@ -9,6 +9,7 @@ import Hero2 from './Hero2/index.svelte';
 import ImageBlock from './ImageBlock/index.svelte';
 import RichText from './RichText/index.svelte';
 import TechList from './TechList/index.svelte';
+import TiktokSlice from './TiktokSlice/index.svelte';
 import Videos from './Videos/index.svelte';
 
 export const components = {
@@ -21,5 +22,6 @@ export const components = {
 	image_block: ImageBlock,
 	rich_text: RichText,
 	tech_list: TechList,
+	tiktok_slice: TiktokSlice,
 	videos: Videos
 };

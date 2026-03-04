@@ -4,7 +4,11 @@ import type * as prismic from '@prismicio/client';
 
 type Simplify<T> = { [KeyType in keyof T]: T[KeyType] };
 
-type LportfolioDocumentDataSlicesSlice = VideosSlice | RichTextSlice | ImageBlockSlice;
+type LportfolioDocumentDataSlicesSlice =
+	| TiktokSliceSlice
+	| VideosSlice
+	| RichTextSlice
+	| ImageBlockSlice;
 
 /**
  * Content for LPortfolio documents
@@ -113,6 +117,7 @@ export type LportfolioDocument<Lang extends string = string> = prismic.PrismicDo
 >;
 
 type PageDocumentDataSlicesSlice =
+	| TiktokSliceSlice
 	| Hero2Slice
 	| VideosSlice
 	| ContentIndexSlice
@@ -194,7 +199,11 @@ export type PageDocument<Lang extends string = string> = prismic.PrismicDocument
 	Lang
 >;
 
-type ProjectsDocumentDataSlicesSlice = VideosSlice | RichTextSlice | ImageBlockSlice;
+type ProjectsDocumentDataSlicesSlice =
+	| TiktokSliceSlice
+	| VideosSlice
+	| RichTextSlice
+	| ImageBlockSlice;
 
 /**
  * Content for ProjectsList documents
@@ -1189,6 +1198,98 @@ type TechListSliceVariation = TechListSliceDefault;
 export type TechListSlice = prismic.SharedSlice<'tech_list', TechListSliceVariation>;
 
 /**
+ * Primary content in *TiktokSlice → Default → Primary*
+ */
+export interface TiktokSliceSliceDefaultPrimary {
+	/**
+	 * TikTok Username field in *TiktokSlice → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: tiktok_slice.default.primary.tiktok_username
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	tiktok_username: prismic.KeyTextField;
+
+	/**
+	 * TikTok Video ID field in *TiktokSlice → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: tiktok_slice.default.primary.tiktok_video_id
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	tiktok_video_id: prismic.KeyTextField;
+
+	/**
+	 * Title Tiktok field in *TiktokSlice → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: tiktok_slice.default.primary.title_tiktok
+	 * - **Documentation**: https://prismic.io/docs/field#key-text
+	 */
+	title_tiktok: prismic.KeyTextField;
+
+	/**
+	 * RichText For Tiktok field in *TiktokSlice → Default → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: tiktok_slice.default.primary.richtext_for_tiktok
+	 * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+	 */
+	richtext_for_tiktok: prismic.RichTextField;
+
+	/**
+	 * Thumbnail Override Tiktok field in *TiktokSlice → Default → Primary*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: tiktok_slice.default.primary.thumbnail_override_tiktok
+	 * - **Documentation**: https://prismic.io/docs/field#image
+	 */
+	thumbnail_override_tiktok: prismic.ImageField<never>;
+
+	/**
+	 * Caption Tiktok field in *TiktokSlice → Default → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: tiktok_slice.default.primary.caption_tiktok
+	 * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+	 */
+	caption_tiktok: prismic.RichTextField;
+}
+
+/**
+ * Default variation for TiktokSlice Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type TiktokSliceSliceDefault = prismic.SharedSliceVariation<
+	'default',
+	Simplify<TiktokSliceSliceDefaultPrimary>,
+	never
+>;
+
+/**
+ * Slice variation for *TiktokSlice*
+ */
+type TiktokSliceSliceVariation = TiktokSliceSliceDefault;
+
+/**
+ * TiktokSlice Shared Slice
+ *
+ * - **API ID**: `tiktok_slice`
+ * - **Description**: TiktokSlice
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type TiktokSliceSlice = prismic.SharedSlice<'tiktok_slice', TiktokSliceSliceVariation>;
+
+/**
  * Primary content in *Videos → Default → Primary*
  */
 export interface VideosSliceDefaultPrimary {
@@ -1334,6 +1435,10 @@ declare module '@prismicio/client' {
 			TechListSliceDefaultPrimary,
 			TechListSliceVariation,
 			TechListSliceDefault,
+			TiktokSliceSlice,
+			TiktokSliceSliceDefaultPrimary,
+			TiktokSliceSliceVariation,
+			TiktokSliceSliceDefault,
 			VideosSlice,
 			VideosSliceDefaultPrimary,
 			VideosSliceVariation,
