@@ -45,7 +45,7 @@
         clearTimeout(idleTimeout);
         idleTimeout = setTimeout(() => {
             hasInteractedWithLetters = false;
-        }, 3000);
+        }, 3500);
     }
 
     onMount(() => {
@@ -106,6 +106,24 @@
             clearInterval(idleInterval);
             clearTimeout(idleTimeout);
             document.removeEventListener("visibilitychange", handleVisibilityChange);
+
+            // NOVA PARTE: Parar todos os áudios ao sair da página
+            name_letters.forEach(l => {
+                if (l.sounds.rumble) {
+                    // Cancela qualquer fade de volume que o GSAP esteja fazendo
+                    gsap.killTweensOf(l.sounds.rumble); 
+                    l.sounds.rumble.pause();
+                    l.sounds.rumble.currentTime = 0;
+                }
+                if (l.sounds.angry) {
+                    l.sounds.angry.pause();
+                    l.sounds.angry.currentTime = 0;
+                }
+                if (l.sounds.mini) {
+                    l.sounds.mini.pause();
+                    l.sounds.mini.currentTime = 0;
+                }
+            });
         };
     });
 
@@ -246,7 +264,7 @@
                         }
                     });
                 });
-            }, 5000);
+            }, 3000);
         }
     }
 </script>
@@ -336,6 +354,20 @@
     @keyframes v1 { 0%, 100% { translate: 0; } 50% { translate: 0 -1px; } }
     @keyframes v2 { 0%, 100% { translate: 0; } 50% { translate: 0 -2px; } }
     @keyframes v3 { 0%, 100% { translate: 0; } 25% { translate: 2px -2px; } 75% { translate: -2px 2px; } }
+    @keyframes fallDiagonal {
+    0% {
+        transform: translate(0, 0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.8; /* Fades in quickly at the top */
+    }
+    100% {
+        /* Drops down 80px and drifts horizontally based on the --drift variable */
+        transform: translate(var(--drift), 80px); 
+        opacity: 0; /* Fades out at the bottom */
+    }
+    }
     
     .is-idle { 
         animation: idle-shake 0.4s; 
