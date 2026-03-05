@@ -5,6 +5,7 @@
     import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
     import gsap from 'gsap';
     import { elasticOut } from 'svelte/easing';
+    import { onMount } from 'svelte';
 
     export let position: [number, number, number] = [0, 0, 0];
     let geometry: THREE.BufferGeometry | null = null;
@@ -12,12 +13,21 @@
     export let rate = 0.5;
     export let scale: [number, number, number] = [1, 1, 1];
 
-    let modelGroup: THREE.Group = new THREE.Group(); // Initialize the model group
-    const soundEffects = [
+    let modelGroup: THREE.Group = new THREE.Group();
+    let meshRef: THREE.Mesh;
+
+    // Inicialização segura dos sons no browser
+    const isBrowser = typeof Audio !== 'undefined';
+    const soundEffects = isBrowser ? [
         new Audio('/sounds/hit.ogg'),
         new Audio('/sounds/hit1.ogg'),
         new Audio('/sounds/hit2.ogg')
-    ];
+    ] : [];
+
+    // Reduz o volume de todos os sons para 50%
+    soundEffects.forEach(sound => {
+        sound.volume = 0.3;
+    });
 
     let visible = false;
 
@@ -37,46 +47,67 @@
         return gsap.utils.random(glbFiles);
     }
 
-    function handleClick(event: MouseEvent) {
-        if (isLoadingGLB) return; // Prevent further clicks while loading
+    // --- TIMER DE 3 SEGUNDOS COM PROTEÇÃO DE ABA ---
+    onMount(() => {
+        const interval = setInterval(() => {
+            // Impede a execução se a aba do navegador não estiver ativa
+            if (document.hidden) return;
 
-        gsap.utils.random(soundEffects).play();
+            if (meshRef && !isLoadingGLB) {
+                handleTrigger(meshRef);
+            }
+        }, 3000); 
 
-        const mesh = (event as any).object as THREE.Mesh; 
-        if (mesh) {
-            isLoadingGLB = true;
+        return () => clearInterval(interval);
+    });
 
-            const randomGLB = getRandomGLB();
-            const loader = new GLTFLoader();
+    // Função centralizada
+    function handleTrigger(targetMesh: THREE.Mesh) {
+        if (isLoadingGLB) return;
 
-            loader.load(randomGLB, (gltf) => {
-                const loadedMesh = gltf.scene.children[0] as THREE.Mesh;
-                const newGeometry = loadedMesh.geometry;
-
-                // Check for material
-                let newMaterial;
-                if (loadedMesh.material) {
-                    newMaterial = Array.isArray(loadedMesh.material) ? loadedMesh.material[0] : loadedMesh.material;
-                } else {
-                    newMaterial = defaultMaterial;
-                }
-
-                applyRotation(mesh);
-
-                setTimeout(() => {
-                    geometry = newGeometry;
-                    customMaterial = newMaterial;
-
-                    isLoadingGLB = false; // Reset loading flag after applying changes
-                }, showNewGLBDelay);
-                
-            }, undefined, (error) => {
-                console.error('An error occurred while loading the GLB:', error);
-                isLoadingGLB = false; // Reset loading flag in case of an error
-            });
+        // Toca um som aleatório (apenas se estivermos no browser e a aba estiver ativa)
+        if (soundEffects.length > 0 && !document.hidden) {
+            const randomSound = gsap.utils.random(soundEffects);
+            randomSound.currentTime = 0; // Reseta para tocar rápido
+            randomSound.play().catch(() => {});
         }
+
+        isLoadingGLB = true;
+
+        const randomGLB = getRandomGLB();
+        const loader = new GLTFLoader();
+
+        loader.load(randomGLB, (gltf) => {
+            const loadedMesh = gltf.scene.children[0] as THREE.Mesh;
+            const newGeometry = loadedMesh.geometry;
+
+            let newMaterial;
+            if (loadedMesh.material) {
+                newMaterial = Array.isArray(loadedMesh.material) ? loadedMesh.material[0] : loadedMesh.material;
+            } else {
+                newMaterial = defaultMaterial;
+            }
+
+            applyRotation(targetMesh);
+
+            setTimeout(() => {
+                geometry = newGeometry;
+                customMaterial = newMaterial;
+                isLoadingGLB = false;
+            }, showNewGLBDelay);
+            
+        }, undefined, (error) => {
+            console.error('An error occurred while loading the GLB:', error);
+            isLoadingGLB = false;
+        });
     }
 
+    function handleClick(event: MouseEvent) {
+        const mesh = (event as any).object as THREE.Mesh; 
+        if (mesh) {
+            handleTrigger(mesh);
+        }
+    }
 
     function applyRotation(mesh: THREE.Mesh) {
         gsap.to(mesh.rotation, {
@@ -98,20 +129,18 @@
             easing: elasticOut,
             duration: gsap.utils.random(800, 1200),
             delay: gsap.utils.random(0, 500)
-            
         };
     });
 
-    // Load initial GLTF
-    const loader = new GLTFLoader();
-    loader.load('/models/Hair.glb', (gltf) => {
-        const loadedMesh = gltf.scene.children[0] as THREE.Mesh;
-
-        geometry = loadedMesh.geometry;
-        customMaterial = loadedMesh.material;
-    });
-
-
+    // Carregamento inicial do modelo
+    if (isBrowser) {
+        const loader = new GLTFLoader();
+        loader.load('/models/Hair.glb', (gltf) => {
+            const loadedMesh = gltf.scene.children[0] as THREE.Mesh;
+            geometry = loadedMesh.geometry;
+            customMaterial = loadedMesh.material;
+        });
+    }
 </script>
 
 <Threlte.Group position={position.map((p) => p * 2)} object={modelGroup}>
@@ -123,6 +152,7 @@
         
         {#if geometry}
             <Threlte.Mesh 
+                bind:ref={meshRef}
                 {visible} 
                 {geometry} 
                 in={bounce} 
@@ -133,7 +163,7 @@
                 position={[0, 0, 0]}
                 rotation={[THREE.MathUtils.degToRad(90), THREE.MathUtils.degToRad(45), THREE.MathUtils.degToRad(20)]}  
             />
-            {:else} 
+        {:else} 
              <Threlte.Mesh />
         {/if}    
         

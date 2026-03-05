@@ -1,48 +1,38 @@
 import type { Client, Content, SliceMapper } from '@prismicio/client';
 
-type Context = { 
-    client: Client<Content.AllDocumentTypes>;
-    lang: string; 
-};
+type Context = any; 
 
 const mapper: SliceMapper<
     Content.ContentIndexSlice,
     { 
         slice: Content.ContentIndexSlice; 
-        items: Content.LportfolioDocument<string>[] | Content.ProjectsDocument<string>[] 
+        items: (Content.LportfolioDocument | Content.ProjectsDocument)[] 
     },
     Context
 > = async ({ slice, context }) => {
-    const { client, lang } = context;
+    // Busca o lang em qualquer nível que ele esteja
+    const lang = context?.lang || context?.context?.lang || 'en-us';
+    const client = context?.client || context?.context?.client;
 
     try {
-        const type =
-            slice.primary.content_type === 'Portfolio'
-                ? 'lportfolio'
-                : 'projects';
+        const rawType = (slice.primary.content_type || '').toLowerCase();
+        const type = rawType.includes('project') ? 'projects' : 'lportfolio';
 
-        // 1️⃣ Tentamos no idioma selecionado
-        let items = await client.getAllByType(type, {
-            lang
-        });
+        if (!client) return { slice, items: [] };
 
-        // 2️⃣ Se não existir tradução, fallback explícito
-        if (!items.length && lang !== 'en-us') {
-            items = await client.getAllByType(type, {
-                lang: 'en-us'
-            });
+        let items = await client.getAllByType(type, { lang });
+
+        // Fallback apenas se realmente não houver nada
+        if (items.length === 0 && lang !== 'en-us') {
+            items = await client.getAllByType(type, { lang: 'en-us' });
         }
 
         return {
             slice,
-            items
+            items: items as (Content.LportfolioDocument | Content.ProjectsDocument)[]
         };
     } catch (error) {
-        console.error('Erro no Mapper do ContentIndex:', error);
-        return {
-            slice,
-            items: []
-        };
+        return { slice, items: [] };
     }
 };
 

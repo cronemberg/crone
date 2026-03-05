@@ -1,21 +1,23 @@
-import { asText, mapSliceZone } from '@prismicio/client';
+import { asText } from '@prismicio/client';
+import { mapSliceZone } from '@prismicio/client';
 import { createClient } from '$lib/prismicio';
 import { mappers } from '$lib/slices/mappers';
 
-export async function load({ fetch, cookies }) {
+export async function load({ fetch, cookies }: any) {
     const client = createClient({ fetch, cookies });
     
-    // 1. Lê o idioma do cookie
+    // 1. Pega o idioma do cookie
     const lang = cookies.get('lang') || 'en-us';
 
     try {
-        // 2. BUSCA PELO UID CORRETO: 'crone'
+        // 2. Busca a página 'crone' no idioma do cookie
         const page = await client.getByUID('page', 'crone', { lang });
 
-        // 3. Mapeia os slices passando o idioma no contexto
-        const slices = await mapSliceZone(page.data.slices, mappers, { 
+        // 3. O AJUSTE: O mapSliceZone espera que o objeto de contexto 
+        // contenha as propriedades diretamente.
+        const slices = await mapSliceZone(page.data.slices, mappers as any, { 
             client, 
-            context: { lang } 
+            lang // ✅ Tem que estar aqui, no mesmo nível do client
         });
 
         return {
@@ -25,13 +27,12 @@ export async function load({ fetch, cookies }) {
             lang 
         };
     } catch (e) {
-        console.error(`Erro ao buscar UID 'crone' em ${lang}. Verifique se a página está publicada.`);
+        console.error(`Erro no Load: Buscando fallback para en-us.`);
         
-        // Fallback para inglês caso a tradução falhe
         const page = await client.getByUID('page', 'crone', { lang: 'en-us' });
-        const slices = await mapSliceZone(page.data.slices, mappers, { 
+        const slices = await mapSliceZone(page.data.slices, mappers as any, { 
             client, 
-            context: { lang: 'en-us' } 
+            lang: 'en-us' 
         });
         
         return {

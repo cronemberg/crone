@@ -17,9 +17,6 @@
     let isDesktop = false; 
     let hoverEl: HTMLDivElement | null = null;
 
-    /* =========================
-        TRADUÇÃO DO BADGE
-    ========================= */
     $: isPt = lang === 'pt-br';
     $: inProgressLabel = isPt ? "Em Progresso" : "In Progress";
 
@@ -34,25 +31,32 @@
         return asImageSrc(image, { fit: 'crop', w: 320, h: 180, exp: -10 });
     });
 
+    let xTo: gsap.QuickToFunc;
+    let yTo: gsap.QuickToFunc;
+    let rotTo: gsap.QuickToFunc;
+
     const handleMouseMove = (e: MouseEvent) => {
         if (!isDesktop || currentIndex === null || !hoverEl) return;
+        
         const mouseX = e.clientX;
         const mouseY = e.clientY;
         const speed = Math.abs(mouseX - lastMousePos.x);
-        gsap.to(hoverEl, {
-            x: mouseX - 112,
-            y: mouseY - 63,
-            rotation: speed * 0.5 * (mouseX > lastMousePos.x ? 1 : -1),
-            ease: 'power2.out',
-            duration: 0.6
-        });
+        const rotation = speed * 0.5 * (mouseX > lastMousePos.x ? 1 : -1);
+
+        // Coloca a ponta esquerda exatamente na posição do mouse.
+        // Adicionei um deslocamento sutil (+15px) para a imagem não cobrir a "setinha" do cursor do usuário.
+        xTo(mouseX + 15); 
+        yTo(mouseY + 15); 
+        
+        rotTo(gsap.utils.clamp(-15, 15, rotation)); 
+
         lastMousePos = { x: mouseX, y: mouseY };
     };
 
     const onMouseEnter = (index: number) => {
         if (!isDesktop) return;
         currentIndex = index;
-        gsap.to(hoverEl, { opacity: 1, visibility: 'visible', duration: 0.3 });
+        gsap.to(hoverEl, { opacity: 1, visibility: 'visible', duration: 0.2 });
     };
 
     const onMouseLeave = () => {
@@ -66,17 +70,35 @@
         });
     };
 
+    const checkDesktop = () => {
+        if (browser) isDesktop = window.innerWidth >= 768;
+    };
+
     onMount(() => {
-        const checkDesktop = () => isDesktop = window.innerWidth >= 768;
         checkDesktop();
         window.addEventListener('resize', checkDesktop);
         window.addEventListener('mousemove', handleMouseMove);
+
+        if (hoverEl) {
+            document.body.appendChild(hoverEl);
+            
+            // MUDA O PIVÔ DE ROTAÇÃO: 0% (esquerda) e 0% (topo)
+            gsap.set(hoverEl, { transformOrigin: "0% 0%" });
+
+            xTo = gsap.quickTo(hoverEl, "x", { duration: 0.15, ease: "power3.out" });
+            yTo = gsap.quickTo(hoverEl, "y", { duration: 0.15, ease: "power3.out" });
+            rotTo = gsap.quickTo(hoverEl, "rotation", { duration: 0.2, ease: "power3.out" });
+        }
     });
 
     onDestroy(() => {
         if (browser) {
-            window.removeEventListener('resize', () => {});
+            window.removeEventListener('resize', checkDesktop); 
             window.removeEventListener('mousemove', handleMouseMove);
+
+            if (hoverEl && hoverEl.parentNode) {
+                hoverEl.parentNode.removeChild(hoverEl);
+            }
         }
     });
 </script>
@@ -125,9 +147,6 @@
         50% { opacity: 0.6; transform: scale(0.99); }
     }
     
-    /* Garantimos que o badge seja visível em todas as telas. 
-       O 'display: none' antigo do pointer-events-none era só para a imagem do hover.
-    */
     @media (max-width: 767px) {
         .fixed.pointer-events-none { display: none !important; }
     }

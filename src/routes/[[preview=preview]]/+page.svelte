@@ -8,4 +8,4 @@
     $: lang = data.lang || 'en-us';
 </script>
 
-<SliceZone slices={data.page.data.slices} {components} context={{ lang }} />
+<SliceZone slices={data.slices} {components} context={{ lang }} />
